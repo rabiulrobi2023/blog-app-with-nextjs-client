@@ -10,7 +10,9 @@ export default function PublicLayout({
     <>
       <Navbar />
       <main className="min-h-dvh">{children}</main>
-      <Footer />
+      <div className="mt-10">
+        <Footer/>
+      </div>
     </>
   );
 }
