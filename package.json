@@ -31,5 +31,18 @@
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.8",
     "typescript": "^5"
-  }
+  },
+  "description": "Clone the repository, install dependencies, and start the dev server",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Apollo-Level2-Web-Dev/next-blog-ui.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Apollo-Level2-Web-Dev/next-blog-ui/issues"
+  },
+  "homepage": "https://github.com/Apollo-Level2-Web-Dev/next-blog-ui#readme"
 }
