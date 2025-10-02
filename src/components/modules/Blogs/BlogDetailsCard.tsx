@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { IBlog } from "@/types";
+import { Metadata } from "next";
 import Image from "next/image";
+
+export const meatadata: Metadata = {
+  title: "Blog Details",
+  description: "blog",
+};
 
 export default async function BlogDetailsCard({ blog }: { blog: IBlog }) {
   if (!blog) {

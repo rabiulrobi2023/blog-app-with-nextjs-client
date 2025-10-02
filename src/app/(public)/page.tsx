@@ -1,6 +1,12 @@
 import BlogCard from "@/components/modules/Blogs/BlogCard";
 import Hero from "@/components/modules/Home/Hero";
 import { IBlog } from "@/types";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home",
+  description: "A simple blog built with Next.js, Tailwind CSS, and shadcn/ui.",
+};
 
 export default async function HomePage() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/post`, {
