@@ -19,18 +19,21 @@ export const generateMetadata = async ({
   };
 };
 
+export const generateStaticParams = async () => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/post`);
+  const { data: blogs }: { data: IBlog[] } = await res.json();
+  return blogs.slice(0, 2).map((blog) => ({
+    blogId: String(blog.id),
+  }));
+};
+
 const BlogDeatailsPage = async ({
   params,
 }: {
   params: Promise<{ blogId: string }>;
 }) => {
   const { blogId } = await params;
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API}/post/${blogId}`,
-    {
-      cache: "no-store",
-    }
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/post/${blogId}`);
   const blog: IBlog = await res.json();
 
   //================Metadata===============
