@@ -3,7 +3,11 @@ import Hero from "@/components/modules/Home/Hero";
 import { IBlog } from "@/types";
 
 export default async function HomePage() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/post`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/post`, {
+    next: {
+      revalidate: 30,
+    },
+  });
   const { data: blogs } = await res.json();
 
   return (
@@ -13,7 +17,7 @@ export default async function HomePage() {
         <h2 className="text-center mt-5 text-4xl">
           Featured Posts
           <div className="grid grid-cols-3 gap-8 mt-5 max-w-6xl mx-auto">
-            {blogs.slice(0,3).map((blog: IBlog) => (
+            {blogs.slice(0, 3).map((blog: IBlog) => (
               <BlogCard key={blog.id} blog={blog} />
             ))}
           </div>
