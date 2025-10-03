@@ -1,4 +1,5 @@
 import BlogDetailsCard from "@/components/modules/Blogs/BlogDetailsCard";
+import { getBlogById } from "@/services/PostServices";
 import { IBlog } from "@/types";
 import { Metadata } from "next";
 
@@ -10,8 +11,8 @@ export const generateMetadata = async ({
   params: Promise<{ blogId: string }>;
 }): Promise<Metadata> => {
   const { blogId } = await params;
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/post/${blogId}`);
-  const blog: IBlog = await res.json();
+
+  const blog: IBlog = await getBlogById(blogId);
 
   return {
     title: blog?.title,
@@ -33,8 +34,8 @@ const BlogDeatailsPage = async ({
   params: Promise<{ blogId: string }>;
 }) => {
   const { blogId } = await params;
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/post/${blogId}`);
-  const blog: IBlog = await res.json();
+
+  const blog: IBlog = await getBlogById(blogId);
 
   //================Metadata===============
 
