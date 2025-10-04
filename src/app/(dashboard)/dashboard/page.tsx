@@ -1,9 +1,9 @@
-import { authOptions } from "@/helpers/authOptions";
-import { getServerSession } from "next-auth";
+import { getUserSession } from "@/helpers/authOptions";
+
 import Image from "next/image";
 
 const DashboardHomePage = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await getUserSession();
   console.log(session);
   return (
     <div className="flex flex-col items-center mx-auto min-h-dvh justify-center">
@@ -13,7 +13,7 @@ const DashboardHomePage = async () => {
       </h1>
       <p className="text-gray-700">{session?.user?.email}</p>
       <Image
-      className="rounded-full"
+        className="rounded-full"
         src={session?.user?.image as string}
         height={300}
         width={200}
