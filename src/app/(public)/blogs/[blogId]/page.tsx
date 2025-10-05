@@ -21,7 +21,7 @@ export const generateMetadata = async ({
 };
 
 export const generateStaticParams = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/post`);
+  const res = await fetch(`${process.env.BASE_API}/post`);
   const { data: blogs }: { data: IBlog[] } = await res.json();
   return blogs.slice(0, 2).map((blog) => ({
     blogId: String(blog.id),

@@ -13,6 +13,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { register } from "@/actions/auth";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+
 
 type RegisterFormValues = {
   name: string;
@@ -23,6 +27,7 @@ type RegisterFormValues = {
 
 export default function RegisterForm() {
   const form = useForm<RegisterFormValues>({
+    //You can also use FormValues which imported from react-hook-form
     defaultValues: {
       name: "",
       email: "",
@@ -31,8 +36,18 @@ export default function RegisterForm() {
     },
   });
 
-  const onSubmit = (values: RegisterFormValues) => {
-    console.log("Form submitted:", values);
+  const router = useRouter();
+  //useRouter used in client route to navigate or redirect another route
+  const onSubmit = async (values: RegisterFormValues) => {
+    try {
+      const res = await register(values);
+      if (res?.id) {
+        toast.success("User Registration Successfully");
+        router.push("/login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

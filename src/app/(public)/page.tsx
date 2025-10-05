@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/post`, {
+  const res = await fetch(`${process.env.BASE_API}/post`, {
     next: {
       tags: ["BLOG"],
     },
