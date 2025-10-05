@@ -11,11 +11,25 @@ export const register = async (data: FieldValues) => {
     },
     body: JSON.stringify(data),
   });
-  console.log("Console from client site",res)
+  console.log("Console from client site", res);
 
   if (!res.ok) {
-    console.error("User registration falied", await res.json());
+    console.error("User registration falied", await res.text());
   }
 
+  return await res.json();
+};
+
+export const login = async (data: FieldValues) => {
+  const res = await fetch(`${process.env.BASE_API}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  if (!res?.ok) {
+    console.log("Login failed", await res.text());
+  }
   return await res.json();
 };
