@@ -1,10 +1,12 @@
 "use server";
 
 import { IBlog } from "@/types";
+import { useSession } from "next-auth/react";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 export const create = async (data: FormData) => {
+
   const blogData = Object.fromEntries(data.entries());
   const modifiedData: Partial<IBlog> = {
     ...blogData,

@@ -71,6 +71,7 @@ export default function LoginForm() {
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
+                      defaultValue="user1@gmail.com"
                       type="email"
                       placeholder="Enter your email"
                       {...field}
@@ -90,6 +91,7 @@ export default function LoginForm() {
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
+                      defaultValue={"111111"}
                       type="password"
                       placeholder="Enter your password"
                       {...field}

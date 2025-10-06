@@ -1,8 +1,27 @@
-import { getServerSession } from "next-auth";
+import { getServerSession, NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export const authOptions = {
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      name: string;
+      role: string;
+      email: string;
+      image: string;
+    };
+  }
+  interface User {
+    id: string;
+    name: string;
+    role: string;
+    email: string;
+    image: string;
+  }
+}
+
+export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -18,7 +37,6 @@ export const authOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
-          console.error("Email or Password is missing");
           return null;
         }
 
@@ -33,7 +51,7 @@ export const authOptions = {
               password: credentials.password,
             }),
           });
-          console.log("Response From Backend:", res);
+
           if (!res?.ok) {
             console.error("Login Failed", await res.text());
             return null;
@@ -46,6 +64,7 @@ export const authOptions = {
               name: user?.name,
               email: user?.email,
               image: user?.picture,
+              role: user?.role,
             };
           } else {
             return null;
@@ -57,6 +76,23 @@ export const authOptions = {
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      console.log(token);
+      if (user) {
+        token.id = user?.id;
+        token.role = user?.role;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session?.user) {
+        session.user.id = token?.id as string;
+        session.user.role = token?.role as string;
+      }
+      return session;
+    },
+  },
 
   secret: process.env.AUTH_SECRET,
   pages: {
