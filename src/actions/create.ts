@@ -1,16 +1,17 @@
 "use server";
 
+import { getUserSession } from "@/helpers/userSession";
 import { IBlog } from "@/types";
-import { useSession } from "next-auth/react";
+
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 export const create = async (data: FormData) => {
-
+  const session = await getUserSession();
   const blogData = Object.fromEntries(data.entries());
   const modifiedData: Partial<IBlog> = {
     ...blogData,
-    authorId: 1,
+    authorId: Number(session?.user.id),
     tags: blogData.tags
       .toString()
       .split(",")

@@ -100,6 +100,3 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
-export const getUserSession = async () => {
-  return await getServerSession(authOptions);
-};
