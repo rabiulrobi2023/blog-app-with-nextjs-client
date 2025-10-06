@@ -16,7 +16,7 @@ const DashboardHomePage = async () => {
         className="rounded-full"
         src={session?.user?.image as string}
         height={300}
-        width={200}
+        width={300}
         alt="Profle Image"
       />
     </div>

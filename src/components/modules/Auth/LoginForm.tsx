@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
@@ -17,34 +17,34 @@ import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { login } from "@/actions/auth";
 import { toast } from "sonner";
-import { error } from "console";
-import { useRouter } from "next/navigation";
 
-type LoginFormValues = {
-  email: string;
-  password: string;
-};
+// type LoginFormValues = {
+//   email: string;
+//   password: string;
+// };
 
 export default function LoginForm() {
-  const form = useForm<LoginFormValues>({
+  const form = useForm<FieldValues>({
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const router = useRouter();
-  const onSubmit = async (values: LoginFormValues) => {
+  const onSubmit = async (values: FieldValues) => {
     try {
-      const res = await login(values);
-      if (res.id) {
-        toast.success("User logged in successfully");
-        router.push("/dashboard");
-      } else {
-        toast.error("User login failed");
-      }
-    } catch (error) {
-      console.log(error);
+      // const res = await login(values);
+      // if (res?.id) {
+      //   toast.success("User Logged in Successfully");
+      // } else {
+      //   toast.error("User Login Failed");
+      // }
+      signIn("credentials", {
+        ...values,
+        callbackUrl: "/dashboard",
+      });
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -132,7 +132,11 @@ export default function LoginForm() {
           <Button
             variant="outline"
             className="flex items-center justify-center gap-2"
-            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+            onClick={() =>
+              signIn("google", {
+                callbackUrl: "/dashboard",
+              })
+            }
           >
             {/* Google */}
             <Image
