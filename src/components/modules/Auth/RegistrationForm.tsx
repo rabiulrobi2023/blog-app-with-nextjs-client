@@ -46,7 +46,7 @@ export default function RegisterForm() {
         router.push("/login");
       }
     } catch (error) {
-      console.log(error);
+      toast.error("Registration failed")
     }
   };
 

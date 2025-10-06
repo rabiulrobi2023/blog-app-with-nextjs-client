@@ -1,6 +1,7 @@
 import { getServerSession, NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { toast } from "sonner";
 
 declare module "next-auth" {
   interface Session {
@@ -53,7 +54,7 @@ export const authOptions: NextAuthOptions = {
           });
 
           if (!res?.ok) {
-            console.error("Login Failed", await res.text());
+            toast.error("Fail to login");
             return null;
           }
 
@@ -70,7 +71,7 @@ export const authOptions: NextAuthOptions = {
             return null;
           }
         } catch (err) {
-          console.error(err);
+          toast.error("Login Fail");
           return null;
         }
       },
@@ -78,7 +79,6 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      console.log(token);
       if (user) {
         token.id = user?.id;
         token.role = user?.role;
@@ -99,4 +99,3 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
 };
-
